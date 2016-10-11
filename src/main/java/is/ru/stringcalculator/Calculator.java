@@ -11,16 +11,21 @@ package is.ru.stringcalculator;
 public class Calculator 
 {
 
-	public static int add(String numbersText)
+	public static int add(String numbers)
 	{
-		if(numbersText.equals(""))
+		if(numbers.equals(""))
 		{
 			return 0;
 		}
 		
-		else if(numbersText.contains(","))
+		else if(numbers.contains(","))
 		{
-			return sum(splitNumbers(numbersText));
+			return sum(splitComma(numbers));
+		}
+
+		else if(numbersText.contains("\n"))
+		{
+			return sum(splitNewLine(numbersText));
 		}
 		
 		else
@@ -32,9 +37,14 @@ public class Calculator
 		return Integer.parseInt(number);
 	}
 
-	private static String[] splitNumbers(String numbers)
+	private static String[] splitComma(String numbers)
 	{
 	    return numbers.split(",");
+	}
+
+	private static String[] splitNewLine(String numbers)
+	{
+	    return numbers.split("\n");
 	}
       
     private static int sum(String[] numbers)
