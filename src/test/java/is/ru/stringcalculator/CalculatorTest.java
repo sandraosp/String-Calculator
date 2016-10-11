@@ -50,4 +50,13 @@ public class CalculatorTest
     	assertEquals(6, Calculator.add("1,2\n3"));
     }
 
+    @Test
+    public void testNegativeNumbers()
+    {
+    	assertEquals(Exception, Calculator.add("-1,-2,-3"));
+    	assertEquals(Exception, Calculator.add("-1,2"));
+    	assertEquals(Exception, Calculator.add("2,-4,3,-5"));
+    }
+
+
 }
