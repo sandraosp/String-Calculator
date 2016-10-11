@@ -1,5 +1,6 @@
 package is.ru.stringcalculator;
 
+
 // 1. CreateaStringcalculatorwithamethodintAdd(stringnumbers) 
 	//   i. The method can take 0, 1, or 2 numbers and will return their sum.
 	//  ii. An empty string will return 0.
@@ -25,14 +26,15 @@ public class Calculator
 		
 		else if(numbers.contains(",\n") || numbers.contains("\n,")) //Can not be both seperators at once
 		{
-			return null;
+			return 0;
 		}
 
-		else if(numbers.contains("//")) //Can not be both seperators at once
+		else if(numbers.contains("//"))
+			 //StringUtils.substringBetween(s, "(", ")"); ATH. Þarf að importa library
 		{
-			public String delimiter = numbers.nextElement("//");
+			String delimiter = numbers.substring(numbers.indexOf("//") + 1, numbers.indexOf("\n"));
 
-			return sumDelim(splitWithDelimiter(numbers, delimiter));
+			return sumDelim(splitWithDelimiter(numbers, delimiter), delimiter);
 		}
 
 		else
@@ -51,11 +53,13 @@ public class Calculator
 			return numbers.split(",");
 		}
 
-		else if(numbersText.contains("\n"))
-		{
-			return numbers.split("\n");
-		}
+		// else if(numbers.contains("\n"))
+		// {
+		// 	return numbers.split("\n");
+		// }
 	    
+	    else
+	    	return numbers.split("\n");
 	}
 
 	private static String[] splitWithDelimiter(String numbers, String delimiter)
@@ -92,13 +96,13 @@ public class Calculator
 
 		if(negatives != "")
 		{
-			throw new Exception("Negatives not allowed: " + negatives);
+			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
 		}
 		
 		return total;
     }
 
-    private static int sumDelim(String[] numbers)
+    private static int sumDelim(String[] numbers, String delimiter)
     {
  	    int total = 0;
  	    String negatives = "";
@@ -126,10 +130,12 @@ public class Calculator
 
 		if(negatives != "")
 		{
-			throw new Exception("Negatives not allowed: " + negatives);
+			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
 		}
-		
-		return total + " (the delimiter is " + delimiter + ")";
+
+		System.out.println(total + " (the delimiter is " + delimiter + ")");
+
+		return total;
     }
 
 }
