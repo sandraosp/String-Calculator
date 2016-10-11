@@ -18,14 +18,9 @@ public class Calculator
 			return 0;
 		}
 		
-		else if(numbers.contains(","))
+		else if(numbers.contains(",") || numbers.contains("\n"))
 		{
-			return sum(splitComma(numbers));
-		}
-
-		else if(numbersText.contains("\n"))
-		{
-			return sum(splitNewLine(numbers));
+			return sum(splitNumbers(numbers));
 		}
 		
 		else
@@ -37,14 +32,18 @@ public class Calculator
 		return Integer.parseInt(number);
 	}
 
-	private static String[] splitComma(String numbers)
+	private static String[] splitNumbers(String numbers)
 	{
-	    return numbers.split(",");
-	}
+		if(numbers.contains(","))
+		{
+			return numbers.split(",");
+		}
 
-	private static String[] splitNewLine(String numbers)
-	{
-	    return numbers.split("\n");
+		else if(numbersText.contains("\n"))
+		{
+			return numbers.split("\n");
+		}
+	    
 	}
       
     private static int sum(String[] numbers)
