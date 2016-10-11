@@ -28,6 +28,13 @@ public class Calculator
 			return null;
 		}
 
+		else if(numbers.contains("//")) //Can not be both seperators at once
+		{
+			public String delimiter = numbers.nextElement("//");
+
+			return sumDelim(splitWithDelimiter(numbers, delimiter));
+		}
+
 		else
 			return 1;
 	}
@@ -49,6 +56,11 @@ public class Calculator
 			return numbers.split("\n");
 		}
 	    
+	}
+
+	private static String[] splitWithDelimiter(String numbers, String delimiter)
+	{
+		return numbers.split(delimiter);
 	}
       
     private static int sum(String[] numbers)
@@ -84,6 +96,40 @@ public class Calculator
 		}
 		
 		return total;
+    }
+
+    private static int sumDelim(String[] numbers)
+    {
+ 	    int total = 0;
+ 	    String negatives = "";
+
+        for(String number : numbers)
+        {
+        	if (toInt(number) < 0)
+			{
+				if(negatives != "")
+				{
+					negatives = negatives + "," + number;
+				}
+				
+				else
+					negatives += number;
+				
+			} 
+
+			else if((toInt(number) >= 0) && (toInt(number) <= 1000))
+			{
+				total += toInt(number);
+			}
+
+		}
+
+		if(negatives != "")
+		{
+			throw new Exception("Negatives not allowed: " + negatives);
+		}
+		
+		return total + " (the delimiter is " + delimiter + ")";
     }
 
 }

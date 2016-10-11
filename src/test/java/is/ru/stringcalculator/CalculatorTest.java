@@ -66,5 +66,13 @@ public class CalculatorTest
     	assertEquals(1, Calculator.add("1,5000"));
     }
 
+    @Test
+    public void testWithDifferentDelimeter()
+    {
+    	assertEquals(3, Calculator.add("//;\n1;2"));
+    	assertEquals(3, Calculator.add("//:\n1:2"));
+    	assertEquals(3, Calculator.add("//.\n1.2"));
+    	assertEquals(3, Calculator.add("//skipta\n1skipta2"));
+    }
 
 }
