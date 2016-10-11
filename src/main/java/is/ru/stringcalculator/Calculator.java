@@ -23,6 +23,11 @@ public class Calculator
 			return sum(splitNumbers(numbers));
 		}
 		
+		else if(numbers.contains(",\n") || numbers.contains("\n,")) //Can not be both seperators at once
+		{
+			return null;
+		}
+
 		else
 			return 1;
 	}
