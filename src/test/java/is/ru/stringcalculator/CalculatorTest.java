@@ -58,5 +58,13 @@ public class CalculatorTest
     	assertEquals(Exception, Calculator.add("2,-4,3,-5"));
     }
 
+        @Test
+    public void testBiggerNumbers() //Should ignore numbers bigger than 1000.
+    {
+    	assertEquals(2, Calculator.add("1001,2"));
+    	assertEquals(0, Calculator.add("2000,1000"));
+    	assertEquals(1, Calculator.add("1,5000"));
+    }
+
 
 }
