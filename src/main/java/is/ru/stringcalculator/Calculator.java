@@ -54,12 +54,35 @@ public class Calculator
     private static int sum(String[] numbers)
     {
  	    int total = 0;
+ 	    String negatives = "";
 
         for(String number : numbers)
         {
-		    total += toInt(number);
+        	if (toInt(number) < 0)
+			{
+				if(negatives != "")
+				{
+					negatives = negatives + "," + number;
+				}
+				
+				else
+					negatives += number;
+				
+				//break;
+			} 
+
+			else if(toInt(number) >= 0)
+			{
+				total += toInt(number);
+			}
+
 		}
 
+		if(negatives != "")
+		{
+			throw new Exception("Negatives not allowed: " + negatives);
+		}
+		
 		return total;
     }
 
