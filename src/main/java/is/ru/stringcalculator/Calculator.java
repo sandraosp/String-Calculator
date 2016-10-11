@@ -25,7 +25,7 @@ public class Calculator
 
 		else if(numbersText.contains("\n"))
 		{
-			return sum(splitNewLine(numbersText));
+			return sum(splitNewLine(numbers));
 		}
 		
 		else
