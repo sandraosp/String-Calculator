@@ -14,14 +14,23 @@ public class Calculator
 
 	public static int add(String numbers)
 	{
+		String newline = System.getProperty("line.separator");
+
 		if(numbers.equals(""))
 		{
 			return 0;
 		}
-		
-		else if(numbers.contains(",") || numbers.contains("\n"))
+
+		else if(numbers.contains("//"))
 		{
-			return sum(splitNumbers(numbers));
+			String delimiter = numbers.substring(numbers.indexOf("//") + 2, numbers.indexOf(newline));
+
+			return sum(splitNumbers(numbers, delimiter), delimiter);
+		}
+		
+		else if(numbers.contains(",") || numbers.contains(newline))
+		{
+			return sum(splitNumbers(numbers, null), null);
 		}
 		
 		else if(numbers.contains(",\n") || numbers.contains("\n,")) //Can not be both seperators at once
@@ -29,16 +38,8 @@ public class Calculator
 			return 0;
 		}
 
-		else if(numbers.contains("//"))
-			 //StringUtils.substringBetween(s, "(", ")"); ATH. Þarf að importa library
-		{
-			String delimiter = numbers.substring(numbers.indexOf("//") + 1, numbers.indexOf("\n"));
-
-			return sumDelim(splitWithDelimiter(numbers, delimiter), delimiter);
-		}
-
 		else
-			return 1;
+			return toInt(numbers);
 	}
 
 	private static int toInt(String number)
@@ -46,28 +47,22 @@ public class Calculator
 		return Integer.parseInt(number);
 	}
 
-	private static String[] splitNumbers(String numbers)
+	private static String[] splitNumbers(String numbers, String delimiter)
 	{
-		if(numbers.contains(","))
+		String newString[] = new String[0];
+		String newline = System.getProperty("line.separator");
+
+		if(delimiter != null)
 		{
-			return numbers.split(",");
+			newString = numbers.substring(numbers.indexOf(newline) + 1, numbers.length()).split(delimiter);
 		}
+		else
+			newString = numbers.split(",|\n");
 
-		// else if(numbers.contains("\n"))
-		// {
-		// 	return numbers.split("\n");
-		// }
-	    
-	    else
-	    	return numbers.split("\n");
-	}
-
-	private static String[] splitWithDelimiter(String numbers, String delimiter)
-	{
-		return numbers.split(delimiter);
+		return newString;
 	}
       
-    private static int sum(String[] numbers)
+    private static int sum(String[] numbers, String delimiter)
     {
  	    int total = 0;
  	    String negatives = "";
@@ -83,11 +78,10 @@ public class Calculator
 				
 				else
 					negatives += number;
-				
-				//break;
+
 			} 
 
-			else if((toInt(number) >= 0) && (toInt(number) <= 1000))
+			else if((toInt(number) < 1001) && (toInt(number) >= 0))
 			{
 				total += toInt(number);
 			}
@@ -96,45 +90,14 @@ public class Calculator
 
 		if(negatives != "")
 		{
-			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
+			throw new IllegalArgumentException(negatives);
+		}
+
+		else if(delimiter != null)
+		{
+			System.out.println(total + " (the delimiter is " + delimiter + ")");
 		}
 		
-		return total;
-    }
-
-    private static int sumDelim(String[] numbers, String delimiter)
-    {
- 	    int total = 0;
- 	    String negatives = "";
-
-        for(String number : numbers)
-        {
-        	if (toInt(number) < 0)
-			{
-				if(negatives != "")
-				{
-					negatives = negatives + "," + number;
-				}
-				
-				else
-					negatives += number;
-				
-			} 
-
-			else if((toInt(number) >= 0) && (toInt(number) <= 1000))
-			{
-				total += toInt(number);
-			}
-
-		}
-
-		if(negatives != "")
-		{
-			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
-		}
-
-		System.out.println(total + " (the delimiter is " + delimiter + ")");
-
 		return total;
     }
 
